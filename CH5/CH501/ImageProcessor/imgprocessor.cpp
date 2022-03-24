@@ -53,7 +53,7 @@ ImgProcessor::ImgProcessor(QWidget *parent)
     createActions();
     createMenus();
     createToolBars();
-    if(img.load("image.png"))
+    if(img.load("C:/Users/yangbo/Pictures/风景/极光.jpg"))
     {
        //在imageLabel对象中放置图像
         showWidget->imageLabel->setPixmap(QPixmap::fromImage(img));

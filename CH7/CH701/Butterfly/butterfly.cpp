@@ -1,11 +1,11 @@
-#include "butterfly.h"
+﻿#include "butterfly.h"
 #include <math.h>
 const static double PI=3.1416;
 Butterfly::Butterfly(QObject *parent) : QObject(parent)
 {
     up = true;					//给标志蝴蝶翅膀位置的变量赋初值
-    pix_up.load("up.png");		//调用QPixmap的load()函数加载所用到的图片
-    pix_down.load("down.png");
+    pix_up.load(":/images/up.png");		//调用QPixmap的load()函数加载所用到的图片
+    pix_down.load(":/images/down.png");
     startTimer(100);			//启动定时器，并设置时间间隔为100毫秒
 }
 QRectF Butterfly::boundingRect() const
@@ -40,8 +40,8 @@ void Butterfly::timerEvent(QTimerEvent *)
         setPos(pos().x(),scene()->sceneRect().bottom());
     if(pos().y()>=edgebottom)		//若超过了下边界，则垂直移回上边界处
         setPos(pos().x(),scene()->sceneRect().top());
-    angle+=(qrand()%10)/20.0;
+    angle+=(rand()%10)/20.0;
     qreal dx=fabs(sin(angle*PI)*10.0);
-    qreal dy=(qrand()%20)-10.0;
+    qreal dy=(rand()%20)-10.0;
     setPos(mapToParent(dx,dy));		//(a)
 }

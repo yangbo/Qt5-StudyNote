@@ -29,3 +29,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     butterfly.h
+
+RESOURCES += \
+    application.qrc
