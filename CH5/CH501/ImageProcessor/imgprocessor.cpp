@@ -1,4 +1,4 @@
-#include "imgprocessor.h"
+﻿#include "imgprocessor.h"
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
@@ -8,6 +8,7 @@
 #include <QColorDialog>
 #include <QColor>
 #include <QTextList>
+#include <QActionGroup>
 ImgProcessor::ImgProcessor(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -25,16 +26,16 @@ ImgProcessor::ImgProcessor(QWidget *parent)
     foreach(int size,db.standardSizes())
         sizeComboBox->addItem(QString::number(size));
     boldBtn =new QToolButton;
-    boldBtn->setIcon(QIcon("bold.png"));
+    boldBtn->setIcon(QIcon(":/images/bold.png"));
     boldBtn->setCheckable(true);
     italicBtn =new QToolButton;
-    italicBtn->setIcon(QIcon("italic.png"));
+    italicBtn->setIcon(QIcon(":/images/italic.png"));
     italicBtn->setCheckable(true);
     underlineBtn =new QToolButton;
-    underlineBtn->setIcon(QIcon("underline.png"));
+    underlineBtn->setIcon(QIcon(":/images/underline.png"));
     underlineBtn->setCheckable(true);
     colorBtn =new QToolButton;
-    colorBtn->setIcon(QIcon("color.png"));
+    colorBtn->setIcon(QIcon(":/images/color.png"));
     colorBtn->setCheckable(true);
     //排序
     listLabel =new QLabel(tr("排序"));
@@ -76,12 +77,12 @@ ImgProcessor::ImgProcessor(QWidget *parent)
 void ImgProcessor::createActions()
 {
     //“打开”动作
-    openFileAction =new QAction(QIcon("open.png"),tr("打开"),this);//(a)
+    openFileAction =new QAction(QIcon(":/images/open.png"),tr("打开"),this);//(a)
     openFileAction->setShortcut(tr("Ctrl+O"));                    //(b)
     openFileAction->setStatusTip(tr("打开一个文件"));               //(c)
     connect(openFileAction,SIGNAL(triggered()),this,SLOT(ShowOpenFile()));
     //“新建”动作
-    NewFileAction =new QAction(QIcon("new.png"),tr("新建"),this);
+    NewFileAction =new QAction(QIcon(":/images/new.png"),tr("新建"),this);
     NewFileAction->setShortcut(tr("Ctrl+N"));
     NewFileAction->setStatusTip(tr("新建一个文件"));
     connect(NewFileAction,SIGNAL(triggered()),this,SLOT(ShowNewFile()));
@@ -91,17 +92,17 @@ void ImgProcessor::createActions()
     exitAction->setStatusTip(tr("退出程序"));
     connect(exitAction,SIGNAL(triggered()),this,SLOT(close()));
     //“复制”动作
-    copyAction =new QAction(QIcon("copy.png"),tr("复制"),this);
+    copyAction =new QAction(QIcon(":/images/copy.png"),tr("复制"),this);
     copyAction->setShortcut(tr("Ctrl+C"));
     copyAction->setStatusTip(tr("复制文件"));
     connect(copyAction,SIGNAL(triggered()),showWidget->text,SLOT (copy()));
     //“剪切”动作
-    cutAction =new QAction(QIcon("cut.png"),tr("剪切"),this);
+    cutAction =new QAction(QIcon(":/images/cut.png"),tr("剪切"),this);
     cutAction->setShortcut(tr("Ctrl+X"));
     cutAction->setStatusTip(tr("剪切文件"));
     connect(cutAction,SIGNAL(triggered()),showWidget->text,SLOT (cut()));
     //“粘贴”动作
-    pasteAction =new QAction(QIcon("paste.png"),tr("粘贴"),this);
+    pasteAction =new QAction(QIcon(":/images/paste.png"),tr("粘贴"),this);
     pasteAction->setShortcut(tr("Ctrl+V"));
     pasteAction->setStatusTip(tr("粘贴文件"));
     connect(pasteAction,SIGNAL(triggered()),showWidget->text,SLOT (paste()));
@@ -109,59 +110,59 @@ void ImgProcessor::createActions()
     aboutAction =new QAction(tr("关于"),this);
     connect(aboutAction,SIGNAL(triggered()),this,SLOT (QApplication::aboutQt()));
     //“打印文本”动作
-    PrintTextAction =new QAction(QIcon("printText.png"),tr("打印文本"), this);
+    PrintTextAction =new QAction(QIcon(":/images/printText.png"),tr("打印文本"), this);
     PrintTextAction->setStatusTip(tr("打印一个文本"));
     connect(PrintTextAction,SIGNAL(triggered()),this,SLOT(ShowPrintText()));
     //“打印图像”动作
-    PrintImageAction =new QAction(QIcon("printImage.png"),tr("打印图像"), this);
+    PrintImageAction =new QAction(QIcon(":/images/printImage.png"),tr("打印图像"), this);
     PrintImageAction->setStatusTip(tr("打印一幅图像"));
     connect(PrintImageAction,SIGNAL(triggered()),this,SLOT(ShowPrintImage()));
     //“放大”动作
-    zoomInAction =new QAction(QIcon("zoomin.png"),tr("放大"),this);
+    zoomInAction =new QAction(QIcon(":/images/zoomin.png"),tr("放大"),this);
     zoomInAction->setStatusTip(tr("放大一张图片"));
     connect(zoomInAction,SIGNAL(triggered()),this,SLOT(ShowZoomIn()));
     //“缩小”动作
-    zoomOutAction =new QAction(QIcon("zoomout.png"),tr("缩小"),this);
+    zoomOutAction =new QAction(QIcon(":/images/zoomout.png"),tr("缩小"),this);
     zoomOutAction->setStatusTip(tr("缩小一张图片"));
     connect(zoomOutAction,SIGNAL(triggered()),this,SLOT(ShowZoomOut()));
     //实现图像旋转的动作（Action）
     //旋转90°
-    rotate90Action =new QAction(QIcon("rotate90.png"),tr("旋转90°"),this);
+    rotate90Action =new QAction(QIcon(":/images/rotate90.png"),tr("旋转90°"),this);
     rotate90Action->setStatusTip(tr("将一幅图旋转90°"));
     connect(rotate90Action,SIGNAL(triggered()),this,SLOT(ShowRotate90()));
     //旋转180°
-    rotate180Action =new QAction(QIcon("rotate180.png"),tr("旋转180°"), this);
+    rotate180Action =new QAction(QIcon(":/images/rotate180.png"),tr("旋转180°"), this);
     rotate180Action->setStatusTip(tr("将一幅图旋转180°"));
     connect(rotate180Action,SIGNAL(triggered()),this,SLOT(ShowRotate180()));
     //旋转270°
-    rotate270Action =new QAction(QIcon("rotate270.png"),tr("旋转270°"), this);
+    rotate270Action =new QAction(QIcon(":/images/rotate270.png"),tr("旋转270°"), this);
     rotate270Action->setStatusTip(tr("将一幅图旋转270°"));
     connect(rotate270Action,SIGNAL(triggered()),this,SLOT(ShowRotate270()));
     //实现图像镜像的动作（Action）
     //纵向镜像
-    mirrorVerticalAction =new QAction(QIcon("mirrorVertical.png"), tr ("纵向镜像"),this);
+    mirrorVerticalAction =new QAction(QIcon(":/images/mirrorVertical.png"), tr ("纵向镜像"),this);
     mirrorVerticalAction->setStatusTip(tr("对一幅图做纵向镜像"));
     connect(mirrorVerticalAction,SIGNAL(triggered()),this,SLOT(ShowMirrorVertical()));
     //横向镜像
-    mirrorHorizontalAction =new QAction(QIcon("mirrorHorizontal.png"), tr("横向镜像"),this);
+    mirrorHorizontalAction =new QAction(QIcon(":/images/mirrorHorizontal.png"), tr("横向镜像"),this);
     mirrorHorizontalAction->setStatusTip(tr("对一幅图做横向镜像"));
     connect(mirrorHorizontalAction,SIGNAL(triggered()),this,SLOT(ShowMirrorHorizontal()));
     //排序：左对齐、右对齐、居中和两端对齐
     actGrp =new QActionGroup(this);
-    leftAction =new QAction(QIcon("left.png"),"左对齐",actGrp);
+    leftAction =new QAction(QIcon(":/images/left.png"),"左对齐",actGrp);
     leftAction->setCheckable(true);
-    rightAction =new QAction(QIcon("right.png"),"右对齐",actGrp);
+    rightAction =new QAction(QIcon(":/images/right.png"),"右对齐",actGrp);
     rightAction->setCheckable(true);
-    centerAction =new QAction(QIcon("center.png"),"居中",actGrp);
+    centerAction =new QAction(QIcon(":/images/center.png"),"居中",actGrp);
     centerAction->setCheckable(true);
-    justifyAction =new QAction(QIcon("justify.png"),"两端对齐",actGrp);
+    justifyAction =new QAction(QIcon(":/images/justify.png"),"两端对齐",actGrp);
     justifyAction->setCheckable(true);
     connect(actGrp,SIGNAL(triggered(QAction*)),this,SLOT(ShowAlignment (QAction*)));
     //实现撤销和恢复的动作（Action）
     //撤销和恢复
-    undoAction =new QAction(QIcon("undo.png"),"撤销",this);
+    undoAction =new QAction(QIcon(":/images/undo.png"),"撤销",this);
     connect(undoAction,SIGNAL(triggered()),showWidget->text,SLOT (undo()));
-    redoAction =new QAction(QIcon("redo.png"),"重做",this);
+    redoAction =new QAction(QIcon(":/images/redo.png"),"重做",this);
     connect(redoAction,SIGNAL(triggered()),showWidget->text,SLOT (redo()));
 }
 

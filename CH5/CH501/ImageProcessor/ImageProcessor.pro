@@ -29,3 +29,6 @@ SOURCES += main.cpp\
 
 HEADERS  += imgprocessor.h \
     showwidget.h
+
+RESOURCES += \
+    application.qrc
